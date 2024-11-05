@@ -11,5 +11,9 @@
   - name: install-apache2 package
     apt:
       name: apache2
+  
+  - name: install php
+    apt:
+      name: php
 
 ...
