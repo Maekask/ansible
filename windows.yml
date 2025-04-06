@@ -1,0 +1,24 @@
+---
+- name: Windows käsklused
+  hosts: windows
+  gather_facts: no
+
+  tasks:
+    - name: Windows versioon
+      win_shell: |
+        (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+      register: win_version
+
+    - name: Näita Windowsi versiooni
+      debug:
+        msg: "Windowsi versioon: {{ win_version.stdout }}"
+
+    - name:  C:\ ketta suurus
+      win_shell: |
+        $drive = Get-PSDrive -Name C
+        "$($drive.Used) / $($drive.Size) bytes used"
+      register: drive_info
+
+    - name: Näita C:\ ketta suurust
+      debug:
+        msg: "C: ketta kasutus: {{ drive_info.stdout }}"
